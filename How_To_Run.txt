@@ -1,0 +1,11 @@
+Heroku link: https://showmerelatedwork-gr8.herokuapp.com/
+
+Deploy heroku-app: git push heroku master
+
+Local run:
+Open git bash on project folder, and run following commands
+
+export url='postgres://joxlraln:0c6ycjU_4-wwGNThr4plv1Hr6YaSGsFi@kandula.db.elephantsql.com:5432/joxlraln'
+
+python server.py
+
