@@ -18,7 +18,7 @@ for i in username_list:
 
 
 class LoginTest(unittest.TestCase):
-    def test_login(self):
+    def test_login_log_out(self):
         driver = webdriver.Chrome(executable_path="chromedriver.exe")
         driver.get("http://127.0.0.1:5000/login")
         driver.maximize_window()
@@ -41,32 +41,4 @@ class LoginTest(unittest.TestCase):
         time.sleep(2)
         driver.quit()
 
-    def test_Sign_up(self):
-        driver = webdriver.Chrome(executable_path="chromedriver.exe")
-        driver.get("http://127.0.0.1:5000/sign_up")
-        driver.maximize_window()
-        driver.find_element_by_xpath("/html/body/div[1]/div/div/form/div[2]/input").send_keys(name)
-        driver.find_element_by_xpath("/html/body/div[1]/div/div/form/div[4]/input").send_keys(surname)
-        driver.find_element_by_xpath("/html/body/div[1]/div/div/form/div[8]/input").send_keys(username)
-        driver.find_element_by_xpath("/html/body/div[1]/div/div/form/div[10]/input").send_keys(password)
-        driver.find_element_by_xpath("/html/body/div[1]/div/div/form/div[11]/button").click()
-        print("Sign up test is successfully completed!")
-        time.sleep(2)
-        driver.quit()
 
-    def test_Sign_up_Failure(self):
-        driver = webdriver.Chrome(executable_path="chromedriver.exe")
-        driver.get("http://127.0.0.1:5000/sign_up")
-        driver.maximize_window()
-        driver.find_element_by_xpath("/html/body/div[1]/div/div/form/div[2]/input").send_keys("enes")
-        driver.find_element_by_xpath("/html/body/div[1]/div/div/form/div[4]/input").send_keys(surname)
-        driver.find_element_by_xpath("/html/body/div[1]/div/div/form/div[8]/input").send_keys(username)
-        driver.find_element_by_xpath("/html/body/div[1]/div/div/form/div[10]/input").send_keys(password)
-        driver.find_element_by_xpath("/html/body/div[1]/div/div/form/div[11]/button").click()
-        print("Sign up failure test is successfully completed!")
-        time.sleep(2)
-        driver.quit()
-
-
-if __name__ == "__main__":
-    unittest.main()

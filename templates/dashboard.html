@@ -163,6 +163,11 @@ https://templatemo.com/tm-521-get-ready
                                         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
                                         <strong>{{ messages[1] }} </strong>  
                                    </div>
+                                   {% elif messages[0] == 'DELETE' %}
+                                   <div class="alert info">
+                                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                                        <strong>{{ messages[1] }} </strong>  
+                                   </div>
                                 {% endif %}
                               {% endwith %}
                               <div id="url">
@@ -204,7 +209,7 @@ https://templatemo.com/tm-521-get-ready
                                    <div class="subscribe-form">
                                      <form action="" method="POST">
                                         
-                                       <input type="text" name="keyword" class="form-control" placeholder="Enter your KeyWord" required="" style="width: 100%;">
+                                       <input type="text" name="keyword" class="form-control" placeholder="Enter your KeyWord like IoT, AI, Smart Homes" required="" style="width: 100%;">
                                         <br>
                                      <div>
                                        <button type="submit" class="w3-button w3-teal w3-round">

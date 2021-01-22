@@ -164,6 +164,7 @@ def results_page():
 
 @app.route("/graph",methods=['GET', 'POST'])
 def graph_page():
+    global url_global
     url = url_global
     obje = forms.ShowMe()
     try:
@@ -195,6 +196,11 @@ def graph_page():
             os.remove('./static/pdf/your_paper.pdf') 
         except:
             print('x')
+    ######################################################################
+    processURL = request.form.get('graph')
+    if processURL:
+        url_global = processURL
+        return redirect(url_for('graph_page'))
     ######################################################################
     processDownloadCit = request.form.get('download_cit')
     if processDownloadCit:
@@ -468,17 +474,24 @@ def bookmarks_page(user_key):
     if request.method == "POST":
         process = request.form.get('buttonName')
         processURL = request.form.get('graph')
+        processADD = request.form.get('addToYourBookmark')
         if (process == "add"):
             return redirect(url_for("bookmark_adding_page"))
         elif processURL:
             url_global = processURL
             return redirect(url_for('graph_page'))
-        elif(process == "delete"):
+        elif process == "delete":
             form_bookmark_keys = request.form.getlist("bookmark_keys")
             for form_bookmark_key in form_bookmark_keys:
                 obje.Bookmark_delete(int(form_bookmark_key))
             cursor = obje.Bookmarks(current_user.username)
             return render_template('bookmarks.html',cursor=cursor, username=current_user.username, currentuser=current_user.username)
+        elif processADD == "addToYourBookmark":
+            form_bookmark_keys = request.form.getlist("bookmark_keys")
+            for form_bookmark_key in form_bookmark_keys:
+                obje.Bookmark_copy(int(form_bookmark_key), current_user.username)
+            cursor = obje.Bookmarks(user_key)
+            return render_template('bookmarks.html',cursor=cursor, username=user_key, currentuser=current_user.username)
     cursor = obje.Bookmarks(user_key)
     return render_template('bookmarks.html',cursor=cursor, username=user_key, currentuser=current_user.username, url_global=url_global)
 app.add_url_rule("/profile/bookmarks/<user_key>", view_func=bookmarks_page)
@@ -512,6 +525,8 @@ def delete_my_account_page(user_key):
                 return redirect(url_for("delete_my_account_page",user_key=current_user.username))
             else:
                 obje.Delete_account(current_user.username)
+                flash("DELETE")
+                flash("Account Deleted!")
                 return redirect(url_for('home_page'))
         return render_template('delete_my_account.html',username=user_key)
     return redirect(url_for("dashboard_page"))

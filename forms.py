@@ -163,3 +163,16 @@ Select Name, Surname, Username,Gender, followed.id, followed.source, followed.ta
 				cursor.execute(statement,([username]))
 				cursor_list=cursor.fetchall()
 				return cursor_list
+	
+	def Bookmark_copy(self,id,username):
+		with dbapi.connect(url) as connection:
+			with connection.cursor() as cursor:
+				statement = """select * from bookmarks where id=%s""" 
+				cursor.execute(statement,([id]))
+				for row in cursor:	
+					paper_url = row[2]
+					title = row[3]
+				with dbapi.connect(url) as connection:
+					with connection.cursor() as cursor2:
+						statement2 = """INSERT INTO Bookmarks(username,url,title) VALUES(%s,%s,%s);"""
+						cursor2.execute(statement2,([username,paper_url,title]))
